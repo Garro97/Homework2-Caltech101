@@ -15,7 +15,7 @@ def pil_loader(path):
     
 def make_dataset(root_directory, class_to_idx, filename):
     instances = []
-    #root_directory = os.path.expanduser(root_directory)
+    root_directory = os.path.expanduser(root_directory)
     
     # SELECT FILE TO READ FOR INPUTS
     input_file_dir = os.path.split(root_directory)[0]
@@ -24,11 +24,11 @@ def make_dataset(root_directory, class_to_idx, filename):
     # READ FILE AND IMAGES
     with open(input_file, "r") as file:
         for line in file:
-            line = line.strip('\n')
+            ln = line.replace('\n','')
             class_name = line.split("/")[0]
             if (not class_name.startswith("BACKGROUND")):
                 class_index = class_to_idx[class_name]
-                path = os.path.join(root_directory, line)
+                path = os.path.join(root_directory, ln)
                 item = path, class_index
                 instances.append(item)
     return instances
