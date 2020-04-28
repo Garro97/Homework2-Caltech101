@@ -38,6 +38,7 @@ def make_dataset(directory, class_to_idx):
     return instances
 
 
+
 class Caltech(VisionDataset):
     def __init__(self, root, split='train', transform=None, target_transform=None):
         super(Caltech, self).__init__(root, transform=transform, target_transform=target_transform)
@@ -53,6 +54,14 @@ class Caltech(VisionDataset):
           through the index
         - Labels should start from 0, so for Caltech you will have lables 0...100 (excluding the background class) 
         '''
+        
+        classes, class_to_idx = self._find_classes(self.root)
+        samples = make_dataset(self.root, class_to_idx, extensions, is_valid_file)
+        
+        self.classes = classes
+        self.class_to_idx = class_to_idx
+        self.samples = samples
+        self.targets = [s[1] for s in samples]
         
         
     def _find_classes(self, dir):
