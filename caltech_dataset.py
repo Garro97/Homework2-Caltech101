@@ -21,9 +21,11 @@ def pil_loader(path):
         img = Image.open(f)
         return img.convert('RGB')
     
-def make_dataset(directory, class_to_idx):
+def make_dataset(directory, class_to_idx, filename):
     instances = []
     directory = os.path.expanduser(directory)
+    input_file_path = os.path.split(directory)
+    input_file = input_file_path + filename
     
     for target_class in sorted(class_to_idx.keys()):
         class_index = class_to_idx[target_class]
@@ -43,8 +45,8 @@ class Caltech(VisionDataset):
     def __init__(self, root, split='train', transform=None, target_transform=None):
         super(Caltech, self).__init__(root, transform=transform, target_transform=target_transform)
 
-        self.split = split # This defines the split you are going to use
-                           # (split files are called 'train.txt' and 'test.txt')
+        self.split = split + "txt"  # This defines the split you are going to use
+                                    # (split files are called 'train.txt' and 'test.txt')
 
         '''
         - Here you should implement the logic for reading the splits files and accessing elements
@@ -56,7 +58,7 @@ class Caltech(VisionDataset):
         '''
         
         classes, class_to_idx = self._find_classes(self.root)
-        samples = make_dataset(self.root, class_to_idx)
+        samples = make_dataset(self.root, class_to_idx, self.split)
         
         self.classes = classes
         self.class_to_idx = class_to_idx
