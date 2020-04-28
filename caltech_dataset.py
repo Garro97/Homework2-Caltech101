@@ -27,6 +27,10 @@ def make_dataset(directory, class_to_idx, filename):
     input_file_path = os.path.split(directory)
     input_file = input_file_path + filename
     
+    with open(input_file, "r") as file:
+        for line in file:
+            
+    
     for target_class in sorted(class_to_idx.keys()):
         class_index = class_to_idx[target_class]
         target_dir = os.path.join(directory, target_class)
