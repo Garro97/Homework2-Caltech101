@@ -19,7 +19,7 @@ def make_dataset(directory, class_to_idx, filename):
     
     # SELECT FILE TO READ FOR INPUTS
     input_file_path = os.path.split(directory)[0]
-    input_file = input_file_path + filename
+    input_file = input_file_path + "/" + filename
     
     # READ FILE AND IMAGES
     with open(input_file, "r") as file:
