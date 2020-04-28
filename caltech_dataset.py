@@ -25,7 +25,7 @@ def make_dataset(directory, class_to_idx, filename):
     with open(input_file, "r") as file:
         for line in file:
             class_name = line.split("/")[0]
-            if (not class_name.startswith("BACKGROUND"))
+            if (not class_name.startswith("BACKGROUND")):
                 class_index = class_to_idx[class_name]
                 path = os.path.join(directory, line)
                 item = path, class_index
@@ -38,7 +38,7 @@ class Caltech(VisionDataset):
     def __init__(self, root, split='train', transform=None, target_transform=None):
         super(Caltech, self).__init__(root, transform=transform, target_transform=target_transform)
 
-        self.split = split + "txt"  # This defines the split you are going to use
+        self.split = split + ".txt"  # This defines the split you are going to use
                                     # (split files are called 'train.txt' and 'test.txt')
 
         '''
@@ -67,7 +67,7 @@ class Caltech(VisionDataset):
         Returns: tuple (classes, class_to_idx) where classes relative to (dir) and class_to_idx dictionary
         '''
         
-        classes = [d.name for d in os.scandir(dir) if (d.is_dir() and not d.name.startswith("BACKGROUND")]
+        classes = [d.name for d in os.scandir(dir) if d.is_dir() and not d.name.startswith("BACKGROUND")]
         classes.sort()
         class_to_idx = {classes[i]: i for i in range(len(classes))}
         return classes, class_to_idx
