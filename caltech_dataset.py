@@ -20,6 +20,22 @@ def pil_loader(path):
     with open(path, 'rb') as f:
         img = Image.open(f)
         return img.convert('RGB')
+    
+def make_dataset(directory, class_to_idx):
+    instances = []
+    directory = os.path.expanduser(directory)
+    
+    for target_class in sorted(class_to_idx.keys()):
+        class_index = class_to_idx[target_class]
+        target_dir = os.path.join(directory, target_class)
+        if not os.path.isdir(target_dir):
+            continue
+        for root, _, fnames in sorted(os.walk(target_dir, followlinks=True)):
+            for fname in sorted(fnames):
+                path = os.path.join(root, fname)
+                item = path, class_index
+                instances.append(item)
+    return instances
 
 
 class Caltech(VisionDataset):
