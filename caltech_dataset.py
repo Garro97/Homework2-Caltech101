@@ -56,7 +56,7 @@ class Caltech(VisionDataset):
         '''
         
         classes, class_to_idx = self._find_classes(self.root)
-        samples = make_dataset(self.root, class_to_idx, extensions, is_valid_file)
+        samples = make_dataset(self.root, class_to_idx)
         
         self.classes = classes
         self.class_to_idx = class_to_idx
