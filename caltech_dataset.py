@@ -6,6 +6,14 @@ import os
 import os.path
 import sys
 
+def is_not_background(filename):
+    # Checks if file is background and filters it out
+    
+    # Returns bool TRUE if filename is not background, FALSE otherwise
+    
+    return filename.startswith("BACKGROUND")
+    
+
 
 def pil_loader(path):
     # open path as file to avoid ResourceWarning (https://github.com/python-pillow/Pillow/issues/835)
@@ -29,6 +37,20 @@ class Caltech(VisionDataset):
           through the index
         - Labels should start from 0, so for Caltech you will have lables 0...100 (excluding the background class) 
         '''
+        
+        
+    def _find_classes(self, dir):
+        '''Finds class folders in the dataset
+        
+        Args: dir (string): root directory path
+        
+        Returns: tuple (classes, class_to_idx) where classes relative to (dir) and class_to_idx dictionary
+        '''
+        
+        classes = [d.name for d in os.scandir(dir) if (d.is_dir() and not d.name.startswith("BACKGROUND")]
+        classes.sort()
+        class_to_idx = {classes[i]: i for i in range(len(classes))}
+        return classes, class_to_idx
 
     def __getitem__(self, index):
         '''
