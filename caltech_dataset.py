@@ -6,14 +6,6 @@ import os
 import os.path
 import sys
 
-def is_not_background(filename):
-    # Checks if file is background and filters it out
-    
-    # Returns bool TRUE if filename is not background, FALSE otherwise
-    
-    return filename.startswith("BACKGROUND")
-    
-
 
 def pil_loader(path):
     # open path as file to avoid ResourceWarning (https://github.com/python-pillow/Pillow/issues/835)
@@ -24,21 +16,18 @@ def pil_loader(path):
 def make_dataset(directory, class_to_idx, filename):
     instances = []
     directory = os.path.expanduser(directory)
-    input_file_path = os.path.split(directory)
+    
+    # SELECT FILE TO READ FOR INPUTS
+    input_file_path = os.path.split(directory)[0]
     input_file = input_file_path + filename
     
+    # READ FILE AND IMAGES
     with open(input_file, "r") as file:
         for line in file:
-            
-    
-    for target_class in sorted(class_to_idx.keys()):
-        class_index = class_to_idx[target_class]
-        target_dir = os.path.join(directory, target_class)
-        if not os.path.isdir(target_dir):
-            continue
-        for root, _, fnames in sorted(os.walk(target_dir, followlinks=True)):
-            for fname in sorted(fnames):
-                path = os.path.join(root, fname)
+            class_name = line.split("/")[0]
+            if (not class_name.startswith("BACKGROUND"))
+                class_index = class_to_idx[class_name]
+                path = os.path.join(directory, line)
                 item = path, class_index
                 instances.append(item)
     return instances
