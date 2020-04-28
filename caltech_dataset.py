@@ -9,7 +9,7 @@ import sys
 
 def pil_loader(path):
     # open path as file to avoid ResourceWarning (https://github.com/python-pillow/Pillow/issues/835)
-    path = path.rstrip()
+    path = 'Caltech101/101_ObjectCategories/accordion/image_0002.jpg'
     with open(path, 'rb') as f:
         img = Image.open(f)
         return img.convert('RGB')
