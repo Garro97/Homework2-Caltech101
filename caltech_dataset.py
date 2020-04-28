@@ -9,18 +9,17 @@ import sys
 
 def pil_loader(path):
     # open path as file to avoid ResourceWarning (https://github.com/python-pillow/Pillow/issues/835)
-    path = 'Caltech101/101_ObjectCategories/accordion/image_0002.jpg'
     with open(path, 'rb') as f:
         img = Image.open(f)
         return img.convert('RGB')
     
-def make_dataset(directory, class_to_idx, filename):
+def make_dataset(root_directory, class_to_idx, filename):
     instances = []
-    directory = os.path.expanduser(directory)
+    #root_directory = os.path.expanduser(root_directory)
     
     # SELECT FILE TO READ FOR INPUTS
-    input_file_path = os.path.split(directory)[0]
-    input_file = input_file_path + "/" + filename
+    input_file_dir = os.path.split(root_directory)[0]
+    input_file = input_file_dir + "/" + filename
     
     # READ FILE AND IMAGES
     with open(input_file, "r") as file:
@@ -29,7 +28,7 @@ def make_dataset(directory, class_to_idx, filename):
             class_name = line.split("/")[0]
             if (not class_name.startswith("BACKGROUND")):
                 class_index = class_to_idx[class_name]
-                path = os.path.join(directory, line)
+                path = os.path.join(root_directory, line)
                 item = path, class_index
                 instances.append(item)
     return instances
