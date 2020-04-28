@@ -24,6 +24,8 @@ def make_dataset(directory, class_to_idx, filename):
     # READ FILE AND IMAGES
     with open(input_file, "r") as file:
         for line in file:
+            if line.endswith('\n'):
+                line = line.rstrip()
             class_name = line.split("/")[0]
             if (not class_name.startswith("BACKGROUND")):
                 class_index = class_to_idx[class_name]
