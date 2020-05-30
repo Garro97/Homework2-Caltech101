@@ -29,7 +29,8 @@ def make_dataset(root_directory, class_to_idx, filename):
             if (not class_name.startswith("BACKGROUND")):
                 class_index = class_to_idx[class_name]
                 path = os.path.join(root_directory, ln)
-                item = path, class_index
+                image = pil_loader(path)
+                item = image, class_index
                 instances.append(item)
     return instances
 
@@ -83,8 +84,8 @@ class Caltech(VisionDataset):
             tuple: (sample, target) where target is class_index of the target class.
         '''
 
-        path, label = self.samples[index]           # Provide a way to access image and label via index
-        image = pil_loader(path)                    # Image should be a PIL Image
+        image, label = self.samples[index]           # Provide a way to access image and label via index
+        #image = pil_loader(path)                    # Image should be a PIL Image
                                                     # label can be int
 
         # Applies preprocessing when accessing the image
